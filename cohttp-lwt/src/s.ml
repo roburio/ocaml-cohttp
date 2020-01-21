@@ -136,21 +136,21 @@ module type Server = sig
 
   val make_response_action :
     ?conn_closed:(conn -> unit) ->
-    callback:(conn -> Cohttp.Request.t -> Body.t ->
+    callback:(conn -> Ipaddr.V4.t -> Cohttp.Request.t -> Body.t ->
               response_action Lwt.t) ->
     unit ->
     t
 
   val make_expert :
     ?conn_closed:(conn -> unit) ->
-    callback:(conn -> Cohttp.Request.t -> Body.t ->
+    callback:(conn -> Ipaddr.V4.t -> Cohttp.Request.t -> Body.t ->
               (Cohttp.Response.t * (IO.ic -> IO.oc -> unit Lwt.t)) Lwt.t) ->
     unit ->
     t
 
   val make :
     ?conn_closed:(conn -> unit) ->
-    callback:(conn -> Cohttp.Request.t -> Body.t ->
+    callback:(conn -> Ipaddr.V4.t -> Cohttp.Request.t -> Body.t ->
               (Cohttp.Response.t * Body.t) Lwt.t) ->
     unit ->
     t
@@ -194,6 +194,6 @@ module type Server = sig
   val respond_not_found :
     ?uri:Uri.t -> unit -> (Cohttp.Response.t * Body.t) Lwt.t
 
-  val callback : t -> IO.conn -> IO.ic -> IO.oc -> unit Lwt.t
+  val callback : t -> Ipaddr.V4.t -> IO.conn -> IO.ic -> IO.oc -> unit Lwt.t
 
 end
